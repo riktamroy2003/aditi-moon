@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aditi, My Moon — Forgive Me 💛</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:"Segoe UI", sans-serif;
+  background:#050412;
+  color:white;
+  overflow:hidden;
+}
+
+/* Start Screen */
+#startScreen{
+  position:fixed; inset:0;
+  background:linear-gradient(180deg,#0a021c,#120028);
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center;
+  z-index:10;
+}
+.start-btn{
+  padding:15px 28px;
+  margin-top:25px;
+  background:linear-gradient(90deg,#ff6b9b,#ffa7c4);
+  border:none; border-radius:12px;
+  font-size:18px; font-weight:600;
+  cursor:pointer;
+  color:#300018;
+  box-shadow:0 0 20px rgba(255,120,150,0.5);
+}
+
+/* Main Container */
+#mainContent{
+  opacity:0;
+  pointer-events:none;
+  transition:0.8s;
+  padding-bottom:50px;
+}
+
+/* Heart Healing Section */
+.heart-box{
+  margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.cracked-heart{
+  width:150px; height:150px;
+  background:red;
+  transform:rotate(45deg);
+  position:relative;
+  border-radius:20px;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,0,0,0.2);
+}
+.cracked-heart:before, .cracked-heart:after{
+  content:"";
+  position:absolute;
+  width:150px; height:150px;
+  background:red;
+  border-radius:50%;
+}
+.cracked-heart:before{ top:-75px; left:0; }
+.cracked-heart:after{ left:75px; top:0; }
+
+.crack{
+  position:absolute;
+  width:6px; height:150px;
+  background:white;
+  left:72px; top:0;
+  transform:skewX(-20deg);
+  border-radius:3px;
+}
+
+/* Healed animation */
+.healed{
+  animation:heal 1s ease-out forwards;
+}
+@keyframes heal{
+  0%{ transform:rotate(45deg) scale(1); box-shadow:0 0 0 rgba(255,255,255,0); }
+  100%{ transform:rotate(45deg) scale(1.2); box-shadow:0 0 35px rgba(255,140,180,0.9); }
+}
+
+/* Sparkles */
+.sparkle{
+  position:absolute;
+  width:8px; height:8px;
+  background:white;
+  border-radius:50%;
+  animation:spark 1.2s ease-out forwards;
+}
+@keyframes spark{
+  from{ opacity:1; transform:scale(1); }
+  to{ opacity:0; transform:scale(6); }
+}
+
+/* Forgive Me Button */
+button{
+  padding:14px 25px;
+  border:none;
+  border-radius:12px;
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+}
+.main-btn{
+  background:linear-gradient(90deg,#ff6b9b,#ffa7c4);
+  color:#300018;
+  margin-top:25px;
+  display:none;
+}
+
+/* Photo */
+.photo{
+  width:90%; max-width:420px;
+  border-radius:20px;
+  overflow:hidden;
+  margin:auto;
+  margin-top:35px;
+  box-shadow:0 0 25px rgba(255,255,255,0.15);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Start Screen -->
+<div id="startScreen">
+  <h1 style="font-size:30px;">Aditi, My Moon</h1>
+  <p style="opacity:0.8; margin-top:10px;">Tap the button to begin something special…</p>
+  <button class="start-btn" id="startBtn">Click Here to Start 💛</button>
+</div>
+
+<!-- Main Content -->
+<div id="mainContent">
+
+  <center>
+    <h2 style="margin-top:20px;">Heal this heart… like you always heal me</h2>
+  </center>
+
+  <!-- Heart Section -->
+  <div class="heart-box">
+    <div class="cracked-heart" id="heart">
+      <div class="crack" id="crack"></div>
+    </div>
+    <p id="hint" style="opacity:0.7; margin-top:12px;">Tap to heal ❤️‍🩹</p>
+  </div>
+
+  <!-- Forgive Button -->
+  <center>
+    <button id="forgiveBtn" class="main-btn">Forgive Me, My Moon 💛</button>
+  </center>
+
+  <!-- Photo Section -->
+  <div class="photo">
+    <img src="us.jpg" style="width:100%; display:block;">
+  </div>
+
+</div>
+
+<!-- Song -->
+<audio id="bgm" loop>
+  <source src="they_call_this_love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Start screen */
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+const mainContent = document.getElementById("mainContent");
+
+startBtn.onclick = ()=>{
+  startScreen.style.opacity="0";
+  startScreen.style.pointerEvents="none";
+  
+  setTimeout(()=>{
+    mainContent.style.opacity="1";
+    mainContent.style.pointerEvents="auto";
+  },500);
+
+  // Try playing music (will only work after user gesture)
+  document.getElementById("bgm").play().catch(()=>{});
+};
+
+/* Heart healing */
+const heart=document.getElementById("heart");
+const crack=document.getElementById("crack");
+const btn=document.getElementById("forgiveBtn");
+
+heart.onclick=()=>{
+
+  crack.style.opacity="0";      // Remove crack
+  heart.classList.add("healed");// Animate heart
+  
+  // Sparkles
+  for(let i=0;i<10;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left="70px";
+    s.style.top="70px";
+    heart.appendChild(s);
+    setTimeout(()=>s.remove(),1200);
+  }
+
+  // Show button
+  setTimeout(()=> btn.style.display="inline-block",1200);
+};
+
+/* Forgive Button */
+btn.onclick=()=>{
+  alert("Thank you, My Moon. I love you 💛");
+};
+</script>
+
+</body>
+</html>
